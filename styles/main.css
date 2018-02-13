@@ -47,6 +47,8 @@ body {
 /****************************************************************/
 .footerMenu {
   display: grid;
+  position: absolute;
+  bottom: 0;
   justify-self: center;
   background-color: gray;
   z-index: 100;
