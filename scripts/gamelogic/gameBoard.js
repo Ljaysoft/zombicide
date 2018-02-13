@@ -105,7 +105,7 @@ class GameBoard {
       var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
       $gameboard.on(mousewheelevt, function(e) {
           e.preventDefault();
-          var delta = e.wheelDelta ? e.wheelDelta : -e.detail;
+          var delta = e.originalEvent ? e.originalEvent.wheelDelta : -e.detail;
           if (delta >= 0) {
               zoomValue*=1.15;
           }
@@ -113,7 +113,7 @@ class GameBoard {
               zoomValue/=1.15;
           }
           $gameboard.css("transform", 'rotateX(-60deg) rotateZ(-45deg)'
-                          +'scale(' + zoomValue + ', '+ zoomValue + ')');
+                          +'scale('+ zoomValue + ')');
       });
     }
 
