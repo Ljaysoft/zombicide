@@ -116,6 +116,7 @@ body h1 {
 /****************************************************************/
 .gameboard {
   position: relative;
+  display: grid;
   border: 1px solid black;
   transform: rotateX(-60deg) rotateZ(-45deg);
   grid-template-columns: repeat(var(--tilesx), var(--tilesize));
