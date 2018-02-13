@@ -70,6 +70,7 @@ class GameController {
           break;
       }
       if (newPos) {
+        $actor.css("grid-column", newPos);        
         console.log(
           "Moved " + actor.id + " " + direction + " to x:" + xPos + " y:" + yPos
         );

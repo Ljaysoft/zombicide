@@ -6,6 +6,8 @@ class GameBoard {
         _this.init();
       }
       this.tileImg.src = 'assets/tiles.png';
+      this.mapPossition = {};
+      _this.startOffset = -200;
       this.map = {
         cols: getGlobalCssProperty('tilesx'),
         rows: getGlobalCssProperty('tilesy'),
@@ -49,19 +51,60 @@ class GameBoard {
           }
         }
       }
-      var _this = this;
+      
+      this.initSelectTileListener(this);
+      this.initDragMapListener(this);
+      this.setMapPosition(0,this.startOffset);
+      this.initZoomListener(this);
+      this.onWindowResize(this);
+    }
+
+    initSelectTileListener(_this){
       $('canvas').click(function(e){
         let xtile = Math.floor(e.offsetX / _this.map.tsize)
         let ytile = Math.floor(e.offsetY / _this.map.tsize)
         let tiletype = _this.map.getTile(xtile,ytile);
         let selection = e.currentTarget;
         if(gameController.selectedObject){
-            console.log('Unselecting: '+ gameController.selectedObject.id);
-            gameController.selectedObject = undefined;
-        }
-        
+          console.log('Unselecting: '+ gameController.selectedObject.id);
+          gameController.selectedObject = undefined;
+        }        
         console.log('Clicked canvas. Pos: x: '+xtile+" y: "+ytile+", tileType: "+tiletype);
       })
+    }
+
+    initDragMapListener(_this){
+      var mousePos = {};
+      var mapPos = {};
+      var dragging = false;
+      $('.gameboard').mousedown(function(event) {
+        mousePos.x = event.pageX;
+        mousePos.y = event.pageY;
+        mapPos.x = _this.mapPossition.x;
+        mapPos.y = _this.mapPossition.y;
+        dragging = true;
+      }).mousemove(function(event) {
+        if(dragging){
+          _this.setMapPosition(mapPos.x + (event.pageX - mousePos.x), mapPos.y + (event.pageY - mousePos.y));
+        }
+      }).mouseup(function(event) {
+        dragging = false;
+      });
+    }
+
+    initZoomListener(_this){
+      var zoomValue = 1;
+      var $gameboard = $('.gameboard');
+      $gameboard.on('mousewheel', function(event) {        
+          if (event.originalEvent.wheelDelta >= 0) {
+              zoomValue*=1.15;
+          }
+          else {
+              zoomValue/=1.15;
+          }
+          $gameboard.css("transform", 'rotateX(-60deg) rotateZ(-45deg)'
+                          +'scale(' + zoomValue + ', '+ zoomValue + ')');
+      });
     }
 
     showActors(){
@@ -83,5 +126,22 @@ class GameBoard {
 
     nextTurn(){
         console.log("nextTurn");
+    }
+
+    onWindowResize(_this){
+      $(window).resize(function(event) {
+        _this.setMapPosition(0,_this.startOffset);
+      });
+    }
+
+    setMapPosition(x,y,animate){
+      this.mapPossition.x = x;
+      this.mapPossition.y = y;
+    
+      var $el = $('.gameboard');
+      $el[(animate)? 'animate' : 'css']({
+        left: ((window.innerWidth/2) - $el.width()/2) + x,
+        top: ((window.innerHeight/2) - $el.height()/2) + y
+      });
     }
   };
