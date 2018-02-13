@@ -55,14 +55,14 @@ class GameController {
         case "left":
           if (xPos > 1) {
             xPos--;
-            newPos = xPos + '/auto';
+            newPos = xPos + "/auto";
             $actor.css("grid-column", newPos);
           }
           break;
         case "right":
           if (xPos < getGlobalCssProperty("tilesx")) {
             xPos++;
-            newPos = xPos + "/auto"
+            newPos = xPos + "/auto";
             $actor.css("grid-column", newPos);
           }
           break;
