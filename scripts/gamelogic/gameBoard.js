@@ -61,8 +61,8 @@ class GameBoard {
 
     initSelectTileListener(_this){
       $('canvas').click(function(e){
-        let xtile = Math.floor(e.offsetX / _this.map.tsize)
-        let ytile = Math.floor(e.offsetY / _this.map.tsize)
+        let xtile = Math.ceil(e.offsetX / _this.map.tsize)
+        let ytile = Math.ceil(e.offsetY / _this.map.tsize)
         let tiletype = _this.map.getTile(xtile,ytile);
         let selection = e.currentTarget;
         if(gameController.selectedObject){
@@ -118,13 +118,17 @@ class GameBoard {
     }
 
     showActors(){
+      var _this = this;
       $('.hero').show();
       $('.zombie').show();
+      $('.gameObject').each(function(index,actor){
+        _this.calcZindex($(actor));
+      });
       $('.gameObject').click(function(e){
         let selection = e.currentTarget;
         console.log('selected :'+selection.id);
         gameController.selectedObject = selection;
-      })
+      });
     }
 
     move(actor, command) {
@@ -137,7 +141,6 @@ class GameBoard {
         let yPos = $actor.css("grid-row-start")*1;
         let offsetHeight = $actor.prop("offsetHeight");
         let offsetWidth = $actor.prop("offsetHeight");
-        let tileSize = getGlobalCssProperty("tilesize").slice(0, -2);
         let newPos;
         switch (direction) {
           case "up":
@@ -174,11 +177,12 @@ class GameBoard {
             break;
         }
         if (newPos) {
+          this.calcZindex($actor);
           console.log(
-            "Moved " + actor.id + " " + direction + " to x:" + xPos + " y:" + yPos
+            "Moved " + actor.id + " " + direction + " to (" + xPos + ", " + yPos + ')'
           );
         } else {
-          console.log("Can't Move" + actor.id + " " + direction + ".");
+          console.log("Can't Move " + actor.id + " " + direction + ".");
         }
       }
     }
@@ -192,6 +196,13 @@ class GameBoard {
           canMove = false;
       });
       return canMove;
+    }
+
+    calcZindex($actor){      
+      let xPos = $actor.css("grid-column-start")*1;
+      let yPos = $actor.css("grid-row-start")*1;
+      //let sign = xPos != yPos ? yPos*1 < xPos*1 : 
+      $actor.css('z-index', 20 + (yPos*10 - (this.map.cols*1 + xPos*1)));
     }
 
     stopGame(){
