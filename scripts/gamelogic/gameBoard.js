@@ -77,18 +77,25 @@ class GameBoard {
       var mousePos = {};
       var mapPos = {};
       var dragging = false;
-      $('.gameboard').mousedown(function(event) {
-        mousePos.x = event.pageX;
-        mousePos.y = event.pageY;
+      $('.gameboard').mousedown(function(e) {
+        e.preventDefault();
+        mousePos.x = e.pageX;
+        mousePos.y = e.pageY;
         mapPos.x = _this.mapPossition.x;
         mapPos.y = _this.mapPossition.y;
         dragging = true;
-      }).mousemove(function(event) {
+        $(this).addClass('move');
+      }).mousemove(function(e) {
+        e.preventDefault();
         if(dragging){
-          _this.setMapPosition(mapPos.x + (event.pageX - mousePos.x), mapPos.y + (event.pageY - mousePos.y));
+          _this.setMapPosition(mapPos.x + (e.pageX - mousePos.x), mapPos.y + (e.pageY - mousePos.y));
         }
-      }).mouseup(function(event) {
+      }).mouseup(function(e) {
         dragging = false;
+        $(this).removeClass('move');
+      }).mouseleave(function(e) {
+        dragging = false;
+        //$(this).removeClass('move');
       });
     }
 

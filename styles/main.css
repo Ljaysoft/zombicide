@@ -77,6 +77,8 @@ body h1 {
   transform: rotateX(-60deg) rotateZ(-45deg);
   width: fit-content;
   height: fit-content;
+  width: -moz-fit-content;
+  height: -moz-fit-content;
   border: 1px solid black;
 }
 .gamePadMenu .upDirection {
@@ -124,6 +126,9 @@ body h1 {
   width: calc(var(--tilesx)*var(--tilesize));
   height: calc(var(--tilesy)*var(--tilesize));
 }
+.move{
+  cursor: move;
+}
 #tilemap {
   margin: auto;
   position: absolute;
@@ -135,8 +140,9 @@ body h1 {
   justify-self: center;
   align-self: center;
   height: var(--tilesize);
+  cursor: pointer;
 }
-.gameObject:hover {
+.gameObject:hover {  
   border: 1px dashed var(--highlight-color);
 }
 .gameObject.selected {
