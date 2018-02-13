@@ -19,12 +19,13 @@
 </head>
 
 <body>
-    <h1>Welcome to Zombicide!</h3>
-        <div class="navMenu">
-            <button id="startGame" onclick="navMenu.onButtonClicked(this)">Start Game</button>
-            <button id="nextTurn" onclick="navMenu.onButtonClicked(this)">Next Turn</button>
-            <button id="resetGame" onclick="navMenu.onButtonClicked(this)">Reset Game</button>
-        </div>
+    <div id="welcome"><h1>Welcome to Zombicide!</h3></div>
+    <div class="navMenu">
+        <button id="startGame" onclick="navMenu.onButtonClicked(this)">Start Game</button>
+        <button id="nextTurn" onclick="navMenu.onButtonClicked(this)">Next Turn</button>
+        <button id="resetGame" onclick="navMenu.onButtonClicked(this)">Reset Game</button>
+    </div>
+    <div class="gameArea">
         <div class="gameboard">
             <div id="bob" class="hero gameObject tooltip">
                 <img src="assets/hero.png" />
@@ -36,23 +37,23 @@
             </div>
             <canvas id='tilemap' />
         </div>
-        <div class="footerMenu">
-            <div class="bottomLeftMenu">
-                <span id="selectionUI">
-                    <span id="selectedLabel">Selected:</span>
-                    <span id="selectedText">Nothing Selected</span>
-                </span>                
-            </div>
-            <h3 id="gamepadTitle">Move Hero</h3>
-            <div class="gamePadMenu">
-                <span class="upDirection"><h3>up</h3></span>
-                <button id="moveUp" onclick="gamePadMenu.move(this.id)">&uarr;</button>
-                <button id="moveDown" onclick="gamePadMenu.move(this.id)">&darr;</button>
-                <button id="moveLeft" onclick="gamePadMenu.move(this.id)">&larr;</button>
-                <button id="moveRight" onclick="gamePadMenu.move(this.id)">&rarr;</button>
-            </div>
+    </div>    
+    <div class="footerMenu">
+        <div class="bottomLeftMenu">
+            <span id="selectionUI">
+                <span id="selectedLabel">Selected:</span>
+                <span id="selectedText">Nothing Selected</span>
+            </span>                
         </div>
-
+        <h3 id="gamepadTitle">Move Hero</h3>
+        <div class="gamePadMenu">
+            <span class="upDirection"><h3>up</h3></span>
+            <button id="moveUp" onclick="gamePadMenu.move(this.id)">&uarr;</button>
+            <button id="moveDown" onclick="gamePadMenu.move(this.id)">&darr;</button>
+            <button id="moveLeft" onclick="gamePadMenu.move(this.id)">&larr;</button>
+            <button id="moveRight" onclick="gamePadMenu.move(this.id)">&rarr;</button>
+        </div>
+    </div>
 </body>
 
 </html>
