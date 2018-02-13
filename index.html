@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Zombicide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/menu/navMenu.js"></script>
+    <script src="scripts/menu/gamePadMenu.js"></script>
+    <script src="scripts/gamelogic/gameBoard.js"></script>
+    <script src="scripts/gamelogic/gameController.js"></script>
+</head>
+
+<body>
+    <h1>Welcome to Zombicide!</h3>
+        <div class="navMenu">
+            <button id="startGame" onclick="navMenu.onButtonClicked(this)">Start Game</button>
+            <button id="nextTurn" onclick="navMenu.onButtonClicked(this)">Next Turn</button>
+            <button id="resetGame" onclick="navMenu.onButtonClicked(this)">Reset Game</button>
+        </div>
+        <div class="gameboard">
+            <div id="bob" class="hero gameObject tooltip">
+                <img src="assets/hero.png" />
+                <span class="tooltiptext">Bob</span>
+            </div>
+            <div id="marcel" class="zombie gameObject tooltip">
+                <img src="assets/zombie.png" />
+                <span class="tooltiptext">Marcel</span>
+            </div>
+            <canvas id='tilemap' />
+        </div>
+        <div class="footerMenu">
+            <div class="bottomLeftMenu">
+                <span id="selectionUI">
+                    <span id="selectedLabel">Selected:</span>
+                    <span id="selectedText">Nothing Selected</span>
+                </span>                
+            </div>
+            <h3 id="gamepadTitle">Move Hero</h3>
+            <div class="gamePadMenu">
+                <button id="moveUp" onclick="gamePadMenu.move(this.id)">&uarr;</button>
+                <button id="moveDown" onclick="gamePadMenu.move(this.id)">&darr;</button>
+                <button id="moveLeft" onclick="gamePadMenu.move(this.id)">&larr;</button>
+                <button id="moveRight" onclick="gamePadMenu.move(this.id)">&rarr;</button>
+            </div>
+        </div>
+
+</body>
+
+</html>

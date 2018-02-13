@@ -1,0 +1,156 @@
+:root {
+  --tilesize:64px;
+  --tilesx:9;
+  --tilesy:9;
+}
+body {
+  display: grid;
+}
+body h1 {
+  justify-self: center;
+}
+/****************************************************************/
+/*                     Nav menu                                 */
+/****************************************************************/
+.navMenu {
+  display: inherit;
+  justify-self: center;
+  position: relative;
+  width: fit-content;
+  border: 1px solid black;
+}
+.navMenu button {
+  display: inherit;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  grid-column: 2;
+  justify-self: center;
+}
+
+/****************************************************************/
+/*                     Footer menu                              */
+/****************************************************************/
+.footerMenu {
+  display: grid;
+  justify-self: center;
+}
+.footerMenu h3 {
+  grid-row: 1;
+  justify-self: center;
+  width: fit-content;
+}
+.footerMenu h3#gamepadTitle {
+  grid-column: 2;
+}
+
+.bottomLeftMenu {
+  display: grid;
+  width: 200px;
+  grid-row-start: 2;
+}
+
+#selectedLabel{
+  font-weight: bold;
+  font-size: large;
+}
+/****************************************************************/
+/*                     Gamepad                                  */
+/****************************************************************/
+.gamePadMenu {
+  display: grid;
+  grid-column: 2;
+  grid-gap: 2px;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid black;
+}
+.gamePadMenu button {
+  width: 32px;
+  height: 32px;
+}
+.gamePadMenu button#moveUp {
+  grid-column: 2;
+  grid-row: 1;
+}
+.gamePadMenu button#moveDown {
+  grid-column: 2;
+  grid-row: 3;
+}
+.gamePadMenu button#moveLeft {
+  grid-column: 1;
+  grid-row: 2;
+}
+.gamePadMenu button#moveRight {
+  grid-column: 3;
+  grid-row: 2;
+}
+/****************************************************************/
+/*                     Gameboard                                */
+/****************************************************************/
+.gameboard {
+  display: inherit;
+  border: 1px solid black;
+  grid-template-columns: repeat(var(--tilesx), var(--tilesize));
+  grid-template-rows: repeat(var(--tilesy), var(--tilesize));
+  width: calc(var(--tilesx)*var(--tilesize));
+  height: calc(var(--tilesy)*var(--tilesize));
+  margin: auto;
+}
+#tilemap {
+  margin: auto;
+  position: absolute;
+}
+/****************************************************************/
+/*                     Game objects                             */
+/****************************************************************/
+.gameObject {
+  display: none;
+  position: relative;
+  justify-self: center;
+  align-self: center;
+  height: var(--tilesize);
+}
+.gameObject:hover {
+  border: 1px dashed var(--highlight-color);
+}
+.gameObject.selected{
+  border: 2px solid var(--highlight-color);
+}
+.hero {
+  --highlight-color: green;
+  grid-column: 2;
+  grid-row: 2;
+  z-index: 10;
+}
+.zombie {
+  --highlight-color: red;
+  grid-column: 4;
+  grid-row: 5;
+  z-index: 10;
+}
+
+/****************************************************************/
+/*                     Game objects                             */
+/****************************************************************/
+
+/* Tooltip text */
+.gameObject .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  border: 1px solid var(--highlight-color);
+
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.gameObject:hover .tooltiptext {
+  visibility: visible;
+}
