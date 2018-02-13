@@ -102,12 +102,15 @@ class GameBoard {
     initZoomListener(_this){
       var zoomValue = 1;
       var $gameboard = $('.gameboard');
-      $gameboard.on('mousewheel', function(event) {        
-          if (event.originalEvent.wheelDelta >= 0) {
-            zoomValue*=1.15;
+      var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+      $gameboard.on(mousewheelevt, function(e) {
+          e.preventDefault();
+          var delta = e.wheelDelta ? e.wheelDelta : -e.detail;
+          if (delta >= 0) {
+              zoomValue*=1.15;
           }
           else {
-            zoomValue/=1.15;
+              zoomValue/=1.15;
           }
           $gameboard.css("transform", 'rotateX(-60deg) rotateZ(-45deg)'
                           +'scale(' + zoomValue + ', '+ zoomValue + ')');
@@ -132,7 +135,7 @@ class GameBoard {
     }
 
     nextTurn(){
-      console.log("nextTurn");
+        console.log("nextTurn");
     }
 
     onWindowResize(_this){
