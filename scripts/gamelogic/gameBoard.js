@@ -105,7 +105,7 @@ class GameBoard {
       var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
       $gameboard.on(mousewheelevt, function(e) {
           e.preventDefault();
-          var delta = e.originalEvent ? e.originalEvent.wheelDelta : -e.detail;
+          var delta = e.originalEvent.wheelDelta ? e.originalEvent.wheelDelta : -e.detail;
           if (delta >= 0) {
               zoomValue*=1.15;
           }
