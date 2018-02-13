@@ -127,6 +127,73 @@ class GameBoard {
       })
     }
 
+    move(actor, command) {
+      if (!actor) {
+        console.log("No Actor selected.");
+      } else {
+        let direction = command.substr(4).toLowerCase();
+        let $actor = $(actor);
+        let xPos = $actor.css("grid-column-start")*1;
+        let yPos = $actor.css("grid-row-start")*1;
+        let offsetHeight = $actor.prop("offsetHeight");
+        let offsetWidth = $actor.prop("offsetHeight");
+        let tileSize = getGlobalCssProperty("tilesize").slice(0, -2);
+        let newPos;
+        switch (direction) {
+          case "up":
+            if (yPos > 1 && this.canMoveTo(xPos,yPos-1)) {
+              yPos--;
+              newPos = yPos + "/auto";
+              $actor.css("grid-row", newPos);
+            }
+            break;
+          case "down":
+            if (yPos < getGlobalCssProperty("tilesy") &&
+            this.canMoveTo(xPos,yPos+1)) {
+              yPos++;
+              newPos = yPos + "/auto";
+              $actor.css("grid-row", newPos);
+            }
+            break;
+          case "left":
+            if (xPos > 1 && this.canMoveTo(xPos-1,yPos)) {
+              xPos--;
+              newPos = xPos + "/auto";
+              $actor.css("grid-column", newPos);
+            }
+            break;
+          case "right":
+            if (xPos < getGlobalCssProperty("tilesx") &&
+                this.canMoveTo(xPos+1,yPos)) {
+              xPos++;
+              newPos = xPos + "/auto";
+              $actor.css("grid-column", newPos);             
+            }
+            break;
+          default:
+            break;
+        }
+        if (newPos) {
+          console.log(
+            "Moved " + actor.id + " " + direction + " to x:" + xPos + " y:" + yPos
+          );
+        } else {
+          console.log("Can't Move" + actor.id + " " + direction + ".");
+        }
+      }
+    }
+
+    canMoveTo(xTo,yTo){
+      var canMove = true;
+      $('.gameObject').each(function(index, actor){
+        let x = $(actor).css('grid-column-start');
+        let y = $(actor).css('grid-row-start');
+        if ( (x == xTo && y == yTo))
+          canMove = false;
+      });
+      return canMove;
+    }
+
     stopGame(){
       $('.hero').hide();
       $('.hero').unbind("click");
