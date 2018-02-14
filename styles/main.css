@@ -20,6 +20,11 @@ body {
   background-color: white;
   z-index: 10;
 }
+.northLabel h3 {
+  align-self: center;
+  position: absolute;
+  transform: rotateZ(45deg) translate3d(-1em,-1em,0em) rotateY(60deg) scale(1.1, 1.1);
+}
 /****************************************************************/
 /*                     Nav menu                                 */
 /****************************************************************/
@@ -88,17 +93,12 @@ body {
   height: -moz-fit-content;
   border: 1px solid black;
 }
-.gamePadMenu .upDirection {
+.gamePadMenu .northLabel {
   grid-column: 2;
   grid-row: 1;
   display: grid;
   position: relative;
   transform: translate(0, -2em);
-}
-.upDirection h3 {
-  align-self: center;
-  position: absolute;
-  transform: rotateZ(45deg) rotateY(60deg) scale(1.1, 1.1);
 }
 .gamePadMenu button {
   width: 32px;
@@ -132,6 +132,11 @@ body {
   grid-template-rows: repeat(var(--tilesy), var(--tilesize));
   width: calc(var(--tilesx)*var(--tilesize));
   height: calc(var(--tilesy)*var(--tilesize));
+}
+.gameboard .northLabel {
+  position: absolute;
+  grid-column: 5;
+  transform: translate3d(0em,-2em,0);
 }
 .move{
   cursor: move;
