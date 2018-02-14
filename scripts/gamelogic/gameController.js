@@ -25,7 +25,7 @@ class GameController {
     this._gameBoard.nextTurn();
   }
   move(command) {
-    this._gameBoard.move(this._selectedObject,command);
+    this._gameBoard.move(this._selectedObject, command);
   }
   get selectedObject() {
     return this._selectedObject;
