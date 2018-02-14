@@ -1,2 +1,9 @@
 {
+    "launcher.commands": [
+        {
+            "description": "Open in Chrome",
+            "executable": "cmd.exe",
+            "parameters": "/c start chrome %item%"
+        }
+    ],
 }
