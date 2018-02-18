@@ -123,7 +123,7 @@ body {
 /****************************************************************/
 /*                     Gameboard                                */
 /****************************************************************/
-.gameboard {
+.gameBoard {
   position: relative;
   display: grid;
   border: 1px solid black;
@@ -133,7 +133,7 @@ body {
   width: calc(var(--tilesx)*var(--tilesize));
   height: calc(var(--tilesy)*var(--tilesize));
 }
-.gameboard .northLabel {
+.gameBoard .northLabel {
   position: absolute;
   grid-column: 5;
   transform: translate3d(0em,-2em,0);
@@ -162,13 +162,9 @@ body {
 }
 .hero {
   --highlight-color: green;
-  grid-column: 2;
-  grid-row: 2;
 }
 .zombie {
   --highlight-color: red;
-  grid-column: 4;
-  grid-row: 5;
 }
 /* Tooltip text */
 .gameObject .tooltiptext {

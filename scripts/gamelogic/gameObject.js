@@ -1,43 +1,101 @@
 class GameObject {
-  constructor(type, name, position, imgSrc, $object) {
+  constructor(type, name) {
     GameObject.prototype.lastId++;
     this.id = GameObject.prototype.lastId;
-    this.type = type ? type : GameObject.getTypes().UNDEFINED;
-    this.name = name ? name : "UnKnownEntity";
-    this.position = position
-      ? position
-      : {
-          xTile: -1,
-          yTile: -1
-        };
-    this.imgSrc = imgSrc ? imgSrc : "assets/unkownEntity.png";
-    this.$object = $object ? $object : GameObject.getTemplate(this);
+    this.type = type;
+    this.name = name;
+    this.position = { x: -1, y: -1 };
+    this.imgSrc = this.getSrcImg();
+    this.animation = {};
+    this.$object = this.getTemplate();
   }
 
-  static getTemplate(gameobject) {
-    let $template = $('<div class="gameObject' + gameobject.type + '><img src="' + gameobject.imgSrc + '" /></div>');
-    let types = GameObject.getTypes();
-    switch (gameobject.type) {
-      case types.HERO:
+  //
+  //  object functions
+  //
+  //
+  getSrcImg() {
+    return "assets/" + this.type + ".png";
+  }
+
+  getTemplate() {
+    let $template = $(
+      '<div id="' +
+        this.id +
+        '" class="gameObject ' +
+        this.type +
+        '"><img src="' +
+        this.imgSrc +
+        '" />' +
+        '<span class="tooltiptext">' +
+        this.name +
+        "</span>" +
+        "</div>"
+    );
+    switch (this.type) {
+      case "zombie":
         break;
-      case types.ZOMBIE:
+      case "hero":
+        break;
+      case "item":
+        break;
+      case "gui":
+        break;
+      case "anim":
         break;
       default:
     }
     return $template.clone();
   }
 
-  static newObject(type, name, position, imgSrc, $object) {
-    return new GameObject(type, name, position, imgSrc, $object);
+  setPosition(position) {
+    this.position = position;
   }
 
-  static getTypes() {
-    return {
-      UNDEFINED: "",
-      HERO: "hero",
-      ZOMBIE: "zombie"
-    };
+  addToBoard(gameController) {
+    gameController.addObject(this);
+  }
+
+  removeFromBoard(gameController) {
+    gameController.removeObject(this);
+  }
+
+  move(gameController) {
+    gameController.moveObject(this, position);
+  }
+
+  setAnimation(animation){
+    this.animation = animation;
+  }
+
+  getElement(){
+    return $('.gameObject#'+this.id);
+  }
+
+  animate() {
+    this.isAnimated = true;
+    let _this = this;
+    let options = {
+      'complete':function(){
+        _this.animation.callback();
+        _this.isAnimated = false;
+      },
+      'duration':'1s'
+    }
+    $('.gameObject#' + this.id + "").animate(this.animation.animation,options);
+  }
+
+  //
+  //  Class functions
+  //
+  //
+  static newObject(type, name) {
+    return new GameObject(type, name);
+  }
+
+  static resetIds(id) {
+    GameObject.prototype.lastId = id ? id : -1;
   }
 }
 
-GameObject.prototype.lastId = 0;
+GameObject.prototype.lastId = -1;
