@@ -60,6 +60,7 @@ class GameController {
       left: (startPos.x - 1) * this._gameBoard.map.tsize + "px"
     });
     //$originalObject.hide();
+    let _this = this;
     gameObject.setAnimation({
       animation: animation,
       callback: function() {
@@ -71,6 +72,7 @@ class GameController {
           left: 'unset'
         }
         gameObject.getElement().css(css);
+        _this._gameBoard.calcZindex(gameObject.getElement());
         //$originalObject.show();
       }
     });
