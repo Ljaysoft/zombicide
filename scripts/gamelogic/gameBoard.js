@@ -139,7 +139,7 @@ class GameBoard {
       let ytile = Math.ceil(e.offsetY / _this.map.tsize);
       let tiletype = _this.map.getTile(xtile, ytile);
       let selection = e.currentTarget;
-      if (gameController.selectedObjectId>=0) {
+      if (gameController.selectedObjectId >= 0) {
         console.log("Unselecting: " + _this.gameObjects[gameController.selectedObjectId].name);
         gameController.selectedObjectId = -1;
       }
@@ -196,7 +196,7 @@ class GameBoard {
   showActors() {
     var _this = this;
     var bob = GameObject.newObject("hero", "bob");
-    bob.setPosition({ x: 1, y: 1 });       
+    bob.setPosition({ x: 4, y: 4 });
     this.gameObjects.push(bob);
     $(".gameBoard").append(bob.$object.clone());
 
@@ -204,7 +204,7 @@ class GameBoard {
     marcel.setPosition({ x: 5, y: 4 });
     this.gameObjects.push(marcel);
     $(".gameBoard").append(marcel.$object.clone());
-    
+
     this.gameObjects.forEach(element => {
       let $element = element.getElement();
       this.place(element);
@@ -222,14 +222,18 @@ class GameBoard {
     let pos = position ? position : gameObject.position;
     if (position) gameObject.setPosition(pos);
     $object.css({
-      "display":"grid",
+      display: "grid",
       "grid-column": pos.y + "/auto",
       "grid-row": pos.x + "/auto"
     });
+    if (gameObject.type == "zombie") {
+      $object.hide();
+      $object.slideDown(500);
+    }
   }
 
   move(objectId, command) {
-    if (objectId<0) {
+    if (objectId < 0) {
       console.log("No Actor selected.");
     } else {
       let direction = command.substr(4).toLowerCase();
@@ -239,28 +243,33 @@ class GameBoard {
         y: $object.css("grid-row-start") * 1
       };
       let newPos = false;
+      let canMove = { canMove: false, collisionId: -1 };
       switch (direction) {
         case "up":
-          if (curPos.y > 1 && this.canMoveTo(curPos.x, curPos.y - 1)) {
+          canMove = this.canMoveTo(curPos.x, curPos.y - 1);
+          if (curPos.y > 1 && canMove.canMove) {
             // using grid
             curPos.y--;
             newPos = true;
           }
           break;
         case "down":
-          if (curPos.y < getGlobalCssProperty("tilesy") && this.canMoveTo(curPos.x, curPos.y + 1)) {
+          canMove = this.canMoveTo(curPos.x, curPos.y + 1);
+          if (curPos.y < getGlobalCssProperty("tilesy") && canMove.canMove) {
             curPos.y++;
             newPos = true;
           }
           break;
         case "left":
-          if (curPos.x > 1 && this.canMoveTo(curPos.x - 1, curPos.y)) {
+          canMove = this.canMoveTo(curPos.x - 1, curPos.y);
+          if (curPos.x > 1 && canMove.canMove) {
             curPos.x--;
             newPos = true;
           }
           break;
         case "right":
-          if (curPos.x < getGlobalCssProperty("tilesx") && this.canMoveTo(curPos.x + 1, curPos.y)) {
+          canMove = this.canMoveTo(curPos.x + 1, curPos.y);
+          if (curPos.x < getGlobalCssProperty("tilesx") && canMove.canMove) {
             curPos.x++;
             newPos = true;
           }
@@ -268,22 +277,43 @@ class GameBoard {
         default:
           break;
       }
+      let curObj = this.gameObjects[objectId];
       if (newPos) {
-        gameController.moveObject(this.gameObjects[objectId],curPos);
+        gameController.moveObject(curObj, curPos);
         this.calcZindex($object);
-        console.log("Moved " + objectId + " " + direction + " to (" + curPos.x + ", " + curPos.y + ")");
+        console.log("Moved " + curObj.name + " " + direction + " to (" + curPos.x + ", " + curPos.y + ")");
       } else {
-        console.log("Can't Move " + objectId + " " + direction + ".");
+        console.log("Can't Move " + curObj.name + " " + direction + ".");
+        if (canMove.collisionId >= 0) {
+          let collisionObj = this.gameObjects[canMove.collisionId];
+          console.log("Collision with " + collisionObj.name + " " + direction + ".");
+          let _this = this;
+          collisionObj.getElement().slideUp({
+            duration: 1000,
+            queue: false,
+            start: function(){
+              let angle = direction == "up" || direction == "left" ? -90 : 90;
+              collisionObj.getElement().find("img").animateRotate(angle);
+            },
+            complete: function() {
+              collisionObj.getElement().remove();
+              _this.gameObjects.pop(canMove.collisionId);
+            }
+          });
+        }
       }
     }
   }
 
   canMoveTo(xTo, yTo) {
-    var canMove = true;
-    $(".gameObject").each(function(index, actor) {
-      let x = $(actor).css("grid-column-start");
-      let y = $(actor).css("grid-row-start");
-      if (x == xTo && y == yTo) canMove = false;
+    var canMove = { canMove: true, collisionId: -1 };
+    $(".gameObject").each(function(index, object) {
+      let x = $(object).css("grid-column-start");
+      let y = $(object).css("grid-row-start");
+      if (x == xTo && y == yTo) {
+        canMove.canMove = false;
+        canMove.collisionId = object.id;
+      }
     });
     return canMove;
   }

@@ -4,6 +4,7 @@ var navMenu;
 var gamePadMenu;
 
 window.onload = function() {
+  initPlugins();
   if(!$('div:last').hasClass('gamePadMenu'))
     $('div:last').remove();
   game = new GameBoard();
