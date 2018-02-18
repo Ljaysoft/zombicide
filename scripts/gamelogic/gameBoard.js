@@ -151,7 +151,7 @@ class GameBoard {
     var mousePos = {};
     var mapPos = {};
     var dragging = false;
-    $(".gameboard")
+    $(".gameBoard")
       .mousedown(function(e) {
         e.preventDefault();
         mousePos.x = e.pageX;
