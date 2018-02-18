@@ -291,9 +291,12 @@ class GameBoard {
           collisionObj.getElement().slideUp({
             duration: 1000,
             queue: false,
-            start: function(){
+            start: function() {
               let angle = direction == "up" || direction == "left" ? -90 : 90;
-              collisionObj.getElement().find("img").animateRotate(angle);
+              collisionObj
+                .getElement()
+                .find("img")
+                .animateRotate(angle);
             },
             complete: function() {
               collisionObj.getElement().remove();
@@ -323,7 +326,6 @@ class GameBoard {
       x: $actor.css("grid-column-start") * 1,
       y: $actor.css("grid-row-start") * 1
     };
-    //let sign = pos.x != pos.y ? pos.y*1 < pos.x*1 :
     $actor.css("z-index", 20 + (pos.y * 10 - (this.map.cols * 1 + pos.x * 1)));
   }
 
