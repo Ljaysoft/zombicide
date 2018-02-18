@@ -135,8 +135,8 @@ class GameBoard {
 
   initSelectTileListener(_this) {
     $("canvas").click(function(e) {
-      let xtile = Math.ceil(e.offsetX / _this.map.tsize);
-      let ytile = Math.ceil(e.offsetY / _this.map.tsize);
+      let xtile = Math.floor(e.offsetX / _this.map.tsize);
+      let ytile = Math.floor(e.offsetY / _this.map.tsize);
       let tiletype = _this.map.getTile(xtile, ytile);
       let selection = e.currentTarget;
       if (gameController.selectedObjectId >= 0) {
