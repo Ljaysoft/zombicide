@@ -2,7 +2,7 @@ function getGlobalCssProperty(name) {
   return getComputedStyle(document.body).getPropertyValue("--" + name);
 }
 
-function setjQueryPlugins() {
+function initPlugins() {
   $.fn.animateRotate = function(angle, duration, easing, complete) {
     return this.each(function() {
       var $elem = $(this);
