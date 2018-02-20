@@ -64,25 +64,25 @@ class GameObject {
     gameController.moveObject(this, position);
   }
 
-  setAnimation(animation){
+  setAnimation(animation) {
     this.animation = animation;
   }
 
-  getElement(){
-    return $('.gameObject#'+this.id);
+  getElement() {
+    return $(".gameObject#" + this.id);
   }
 
   animate() {
     this.isAnimated = true;
     let _this = this;
     let options = {
-      'complete':function(){
+      complete: function() {
         _this.animation.callback();
         _this.isAnimated = false;
       },
-      'duration':'1s'
-    }
-    $('.gameObject#' + this.id + "").animate(this.animation.animation,options);
+      duration: "1s"
+    };
+    $(".gameObject#" + this.id + "").animate(this.animation.animation, options);
   }
 
   //

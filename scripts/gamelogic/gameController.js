@@ -32,10 +32,10 @@ class GameController {
   }
   set selectedObjectId(id) {
     this._selectedObjectId = id;
-    if (id>=0) {
+    if (id >= 0) {
       let object = this._gameBoard.gameObjects[id];
-      $('.gameObject').removeClass("selected");
-      $('.gameObject#'+id).addClass("selected");
+      $(".gameObject").removeClass("selected");
+      $(".gameObject#" + id).addClass("selected");
       $("#selectedText").text(object.name);
     } else {
       $(".gameObject").removeClass("selected");
@@ -68,9 +68,9 @@ class GameController {
         var css = {
           "grid-row": gameObject.position.y + "/auto",
           "grid-column": gameObject.position.x + "/auto",
-          top: 'unset',
-          left: 'unset'
-        }
+          top: "unset",
+          left: "unset"
+        };
         gameObject.getElement().css(css);
         _this._gameBoard.calcZindex(gameObject.getElement());
         //$originalObject.show();

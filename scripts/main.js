@@ -5,8 +5,7 @@ var gamePadMenu;
 
 window.onload = function() {
   initPlugins();
-  if(!$('div:last').hasClass('gamePadMenu'))
-    $('div:last').remove();
+  if (!$("div:last").hasClass("gamePadMenu")) $("div:last").remove();
   game = new GameBoard();
   gameController = new GameController(game);
   navMenu = new NavMenu(gameController);
