@@ -233,7 +233,7 @@ class GameBoard {
   }
 
   move(objectId, command) {
-    if (objectId < 0) {
+    if (objectId < 0 || objectId == undefined) {
       console.log("No Actor selected.");
     } else {
       let direction = command.substr(4).toLowerCase();
