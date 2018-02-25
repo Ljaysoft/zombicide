@@ -173,7 +173,6 @@ class GameBoard {
       })
       .mouseleave(function(e) {
         dragging = false;
-        //$(this).removeClass('move');
       });
   }
 
