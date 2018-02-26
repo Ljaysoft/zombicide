@@ -17,10 +17,13 @@
     <script async src="scripts/gamelogic/gameBoard.js"></script>
     <script async src="scripts/gamelogic/gameController.js"></script>
     <script async src="scripts/gamelogic/gameObject.js"></script>
+    <script async src="scripts/gamelogic/gameEvents.js"></script>
 </head>
 
 <body>
-    <div id="welcome"><h1>Welcome to Zombicide!</h3></div>
+    <div id="welcome">
+        <h1>Welcome to Zombicide!</h3>
+    </div>
     <div class="navMenu">
         <button id="startGame" onclick="navMenu.onButtonClicked(this)">Start Game</button>
         <button id="nextTurn" onclick="navMenu.onButtonClicked(this)">Next Turn</button>
@@ -28,21 +31,26 @@
     </div>
     <div class="gameArea">
         <div class="gameBoard">
-            <span class="northLabel"><h3>North</h3></span>
+            <span class="northLabel">
+                <h3>North</h3>
+            </span>
             <canvas id='tilemap' />
         </div>
-    </div>    
+    </div>
     <div class="footerMenu">
-        <div class="notice">Scroll over map to zoom.<br>Drag map to move.</div>
+        <div class="notice">Scroll over map to zoom.
+            <br>Drag map to move.</div>
         <div class="bottomLeftMenu">
             <span id="selectionUI">
                 <span id="selectedLabel">Selected:</span>
                 <span id="selectedText">Nothing Selected</span>
-            </span>                
+            </span>
         </div>
         <h3 id="gamepadTitle">Move Hero</h3>
         <div class="gamePadMenu">
-            <span class="northLabel"><h3>North</h3></span>
+            <span class="northLabel">
+                <h3>North</h3>
+            </span>
             <button id="moveUp" onclick="gamePadMenu.move(this.id)">&uarr;</button>
             <button id="moveDown" onclick="gamePadMenu.move(this.id)">&darr;</button>
             <button id="moveLeft" onclick="gamePadMenu.move(this.id)">&larr;</button>

@@ -43,6 +43,13 @@ class GameController {
     }
   }
 
+  eventCallback(event) {
+    switch (event.type) {
+      default:
+        return;
+    }
+  }
+
   moveObject(gameObject, position) {
     if (gameObject.isAnimated) {
       return;
